@@ -1,3 +1,4 @@
+// Setting up Imports
 const express = require("express");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
@@ -10,9 +11,16 @@ const auth = require("./middleware/verifyToken");
 const path = require("path");
 var cors = require("cors");
 
+// securing ENV
 dotenv.config();
+
+// database connection
 connectDB();
+
+// initialising our app
 const app = express();
+
+// getting rid of access control policy
 app.use(cors());
 
 app.use(express.json()); // to accept json data
@@ -21,6 +29,7 @@ app.use(express.json()); // to accept json data
 //   res.send("API Running!");
 // });
 
+// Initialising routes
 app.use("/api/user", userRoutes);
 app.use("/api/titles", title);
 
@@ -47,7 +56,11 @@ app.use(notFound);
 app.use(errorHandler);
 app.use(auth);
 
+// Declared server port i.e localhost 2000 or proovided by hosting
+
 const PORT = process.env.PORT;
+
+// Listen server at PORT
 
 const server = app.listen(
   PORT,
