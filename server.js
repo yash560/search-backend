@@ -61,8 +61,10 @@ app.use(auth);
 const PORT = process.env.PORT;
 
 // Listen server at PORT
-
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 const server = app.listen(
   PORT,
-  console.log(`Server running on PORT ${PORT}...`.yellow.bold)
+  console.log(`Server running on PORT ${PORT}...`)
 );
