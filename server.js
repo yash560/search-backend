@@ -5,8 +5,11 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const title = require("./routes/title");
 
-const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const { errorHandler } = require("./middleware/errorMiddleware");
 const auth = require("./middleware/verifyToken");
+
+// Declared server port i.e localhost 2000 or proovided by hosting
+const PORT = process.env.PORT || 2000;
 
 const path = require("path");
 var cors = require("cors");
@@ -22,7 +25,25 @@ const app = express();
 
 // getting rid of access control policy
 app.use(cors());
-
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader(
+    "Access-Control-Allow-Method",
+    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type",
+    "Authorization"
+  );
+  next();
+});
 app.use(express.json()); // to accept json data
 
 // app.get("/", (req, res) => {
@@ -52,19 +73,10 @@ const __dirname1 = path.resolve();
 // --------------------------deployment------------------------------
 
 // Error Handling and auth middlewares
-app.use(notFound);
 app.use(errorHandler);
-app.use(auth);
-
-// Declared server port i.e localhost 2000 or proovided by hosting
-
-const PORT = process.env.PORT;
 
 // Listen server at PORT
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-const server = app.listen(
-  PORT,
-  console.log(`Server running on PORT ${PORT}...`)
-);
+app.listen(PORT, console.log(`Server running on PORT ${PORT}...`));
