@@ -4,6 +4,9 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const title = require("./routes/title");
 
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const auth = require("./middleware/verifyToken");
+
 const path = require("path");
 var cors = require("cors");
 
@@ -40,6 +43,9 @@ const __dirname1 = path.resolve();
 // --------------------------deployment------------------------------
 
 // Error Handling and auth middlewares
+app.use(notFound);
+app.use(errorHandler);
+app.use(auth);
 
 const PORT = process.env.PORT;
 
