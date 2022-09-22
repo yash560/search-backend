@@ -8,7 +8,6 @@ const title = require("./routes/title");
 // Declared server port i.e localhost 2000 or proovided by hosting
 const PORT = process.env.PORT || 2000;
 
-const path = require("path");
 var cors = require("cors");
 
 // securing ENV
@@ -48,8 +47,6 @@ app.use("/api/user", userRoutes);
 app.use("/api/titles", title);
 
 // --------------------------deployment------------------------------
-
-const __dirname1 = path.resolve();
 
 // if (process.env.NODE_ENV === "production") {
 //   app.use(express.static(path.join(__dirname1, "/frontend/build")));
