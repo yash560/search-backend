@@ -5,9 +5,6 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const title = require("./routes/title");
 
-const { errorHandler } = require("./middleware/errorMiddleware");
-const auth = require("./middleware/verifyToken");
-
 // Declared server port i.e localhost 2000 or proovided by hosting
 const PORT = process.env.PORT || 2000;
 
@@ -46,10 +43,6 @@ app.use((req, res, next) => {
 });
 app.use(express.json()); // to accept json data
 
-// app.get("/", (req, res) => {
-//   res.send("API Running!");
-// });
-
 // Initialising routes
 app.use("/api/user", userRoutes);
 app.use("/api/titles", title);
@@ -72,11 +65,8 @@ const __dirname1 = path.resolve();
 
 // --------------------------deployment------------------------------
 
-// Error Handling and auth middlewares
-app.use(errorHandler);
-
 // Listen server at PORT
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("API Running!");
 });
 app.listen(PORT, console.log(`Server running on PORT ${PORT}...`));
